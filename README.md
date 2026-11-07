@@ -2,25 +2,24 @@
 
 Assignment #6 - Visitor pattern (ShP-2216, Astana IT University).
 
-A smart greenhouse is a tree of elements: tomato bushes, strawberry plants and zones
-(a zone can contain other elements and other zones). New operations on this tree
-(water needed, harvest forecast, CSV export) are separate visitor classes, so the
-element classes never change when an operation is added.
+A smart greenhouse holds different plants: tomato bushes, strawberry plants and cucumber
+vines. New operations on the greenhouse (water needed, harvest forecast, plant list) are
+separate visitor classes, so the plant classes never change when an operation is added.
 
 ## Structure
 
 | Pattern part | Class |
 |---|---|
 | Element interface | `GreenhouseElement` |
-| Concrete elements | `Tomato`, `Strawberry`, `Zone` |
+| Concrete elements | `Tomato`, `Strawberry`, `Cucumber` |
 | Visitor interface | `GreenhouseVisitor` |
-| Concrete visitors | `WaterNeedVisitor`, `HarvestForecastVisitor`, `ExportVisitor` |
-| Object structure | `Zone` (a tree of elements) |
+| Concrete visitors | `WaterNeedVisitor`, `HarvestForecastVisitor`, `ReportVisitor` |
+| Object structure | `Greenhouse` (holds the plants and walks through them) |
 | Client | `Main` |
 
-Double dispatch: `element.accept(visitor)` calls `visitor.visitTomato(this)` (or
-`visitStrawberry` / `visitZone`), so the right method is chosen by the type of the
-element and by the type of the visitor, without any `instanceof`.
+Double dispatch: `plant.accept(visitor)` calls `visitor.visitTomato(this)` (or
+`visitStrawberry` / `visitCucumber`), so the right method is chosen by the type of the
+plant and by the type of the visitor, without any `instanceof`.
 
 ## Run
 
@@ -37,19 +36,15 @@ java -cp out Tests
 ## Sample output
 
 ```
-Total water needed: 15900 ml
-Expected harvest: 74 kg
-Export:
-type,name_or_count
-Zone,Main greenhouse
-Tomato,10
-Strawberry,20
-Zone,Back row
-Tomato,5
-Strawberry,8
+Total water needed: 13400 ml
+Expected harvest: 65 kg
+Plant list:
+Tomato: 10 bushes
+Strawberry: 20 plants
+Cucumber: 6 vines
 ```
 
 ## Adding a new operation
 
-Create a new class that implements `GreenhouseVisitor` (see `ExportVisitor`).
-`Tomato`, `Strawberry` and `Zone` do not change.
+Create a new class that implements `GreenhouseVisitor` (see `ReportVisitor`).
+`Tomato`, `Strawberry`, `Cucumber` and `Greenhouse` do not change.
