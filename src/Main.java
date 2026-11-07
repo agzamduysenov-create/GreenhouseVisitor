@@ -12,5 +12,10 @@ public class Main {
         HarvestForecastVisitor harvest = new HarvestForecastVisitor();
         greenhouse.accept(harvest);
         System.out.println("Expected harvest: " + harvest.getTotalKg() + " kg");
+
+        ReportVisitor report = new ReportVisitor();
+        greenhouse.accept(report);
+        System.out.println("Plant list:");
+        System.out.print(report.getReport());
     }
 }
